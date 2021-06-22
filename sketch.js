@@ -2,11 +2,25 @@ var trex, trex_running, edges;
 var groundImage,ground;
 var invisibleGround
 var cloud,cloudImage
+var obstacle1
+var obstacle2
+var obstacle3
+var obstacle4
+var obstacle5
+var obstacle6
+var obstacle
+var score = 0
 
 function preload(){
   trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
   groundImage = loadImage("ground2.png")
   cloudImage = loadImage("cloud.png")
+  obstacle1 = loadImage("obstacle1.png")
+  obstacle2 = loadImage("obstacle2.png")
+  obstacle3 = loadImage("obstacle3.png")
+  obstacle4 = loadImage("obstacle4.png")
+  obstacle5 = loadImage("obstacle5.png")
+  obstacle6 = loadImage("obstacle6.png")
 }
 
 function setup(){
@@ -33,6 +47,9 @@ function draw(){
   //set background color 
   background(180);
   
+  text("SCORE: "+score,500,50)
+
+  score = score+Math.round(frameCount/60)
   //logging the y position of the trex
   
   //jump when space key is pressed
@@ -53,6 +70,10 @@ function draw(){
   if(frameCount%50===0){
     spawnCloud()
   }
+
+  if(frameCount%80===0){
+    spawnObstacles()
+  }
   drawSprites();
 }
 
@@ -64,4 +85,41 @@ cloud.addImage("cloud",cloudImage)
 cloud.scale = 0.5
 cloud.depth=trex.depth
 trex.depth = trex.depth+1
+cloud.lifetime = 600/4
 }
+
+function spawnObstacles(){
+obstacle=createSprite(610,160,10,10)
+obstacle.velocityX = -4
+obstacle.lifetime=600/4
+var rand =  Math.round(random(1,6));
+
+switch(rand){
+  case 1:
+    obstacle.addImage("ob1",obstacle1);
+    break;
+
+  case 2:
+    obstacle.addImage("ob2",obstacle2);
+    break;
+
+  case 3:
+    obstacle.addImage("ob3",obstacle3);
+    break;
+  case 4:
+    obstacle.addImage("ob4",obstacle4);
+    break;
+
+  case 5:
+    obstacle.addImage("ob",obstacle5);
+    break;
+
+  case 6:
+    obstacle.addImage("ob6",obstacle6);
+    break;
+      
+}
+
+obstacle.scale=0.5
+}
+   
